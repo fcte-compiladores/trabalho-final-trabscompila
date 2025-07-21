@@ -1,79 +1,134 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Hppw7Zh2)
-# Trabalho Final
+# Título: PARSER DE PDDL
+#### Integrante: PEDRO AUGUSTO DOURADO IZARIAS - 200062620 - T03
 
-## Escopo e organização
+## Introdução: 
+Este projeto implementa um parser completo para a linguagem PDDL (Planning Domain Definition Language), uma linguagem especializada para descrição de problemas de planejamento automatizado em inteligência artificial. O parser realiza análise lexical e sintática de arquivos PDDL, validando tanto domínios quanto problemas de planejamento.
 
-O trabalho é de tema livre dentro do escopo da disciplina de compiladores e
-consiste no desenvolvimento de alguma aplicação na área da disciplina (um
-interpretador para uma linguagem simples, compilador, analisadores de código,
-etc.)
+## Estratégias e Algoritmos Implementados:
 
-O trabalho pode ser feito em grupos de até 4 pessoas.
+#### Análise Lexical
+- Tokenização: Implementação de lexer que reconhece tokens PDDL (parênteses, identificadores, keywords, números, operadores)
+- Tratamento de comentários: Ignora linhas iniciadas com `;`
+- Controle de linha: Rastreamento preciso de números de linha para relatório de erros
+- Reconhecimento de operadores: Suporte a operadores matemáticos (`=`, `<`, `>`, `<=`, `>=`)
 
-## Estrutura
+#### Análise Sintática  
+- Implementação de parser que segue a gramática hierárquica do PDDL
+- Verificação de parênteses: Validação de estruturas aninhadas
 
-Os trabalhos devem ser entregues na atividade própria no [github-classrrom](...).
-Cada repositório deve ter uma estrutura parecida com a delineada abaixo:
+#### Extensões PDDL Suportadas
+- PDDL básico: `:strips`, `:typing`
+- Extensões numéricas: `:fluents`, funções numéricas, operadores aritméticos
+- Extensões avançadas: `:adl`, `:conditional-effects`, `:durative-actions`
 
-* **README:** o arquivo README.md na base do repositório deve descrever os
-  detalhes da implementação do código. O README deve ter algumas seções 
-  obrigatórias:
-  - **Título**: nome do projeto
-  - **Integrantes**: lista com os nomes, matrículas e turma de cada integrante.
-  - **Introdução**: deve detalhar o que o projeto implementou, quais foram as
-    estratégias e algoritmos relevantes. Se o projeto implementa uma linguagem
-    não-comum ou um subconjunto de uma linguagem comum, deve conter alguns
-    exemplos de comandos nesta linguagem, descrendo a sua sintaxe e semântica,
-    quando necessário.
-  - **Instalação**: deve detalhar os passos para instalar as dependências e
-    rodar o código do projeto. Pode ser algo simples como *"Rode
-    `uv run lox hello.lox` para executar o interpretador."*, se a linguagem de
-    implementação permitir este tipo de facilidade.
+## Sintaxe e Semântica PDDL:
 
-    Você pode usar gerenciadores de pacotes específicos de linguagens populares
-    como uv, npm, cargo, etc, containers Docker/Podman, ou `.nix`.
-  - **Exemplos**: o projeto deve conter uma pasta "exemplos" com alguns arquivos
-    na linguagem de programação implementada. Deve conter exemplos com graus
-    variáveis de complexidade. Algo como: hello world, fibonacci, função
-    recursiva, alguma estrutura de dados e para finalizar um algoritmo um pouco
-    mais elaborado como ordenamento de listas, busca binária, etc.
-    
-    Note que isto é apenas um guia da ordem de dificuldade dos problemas.
-    Algumas linguagens sequer permitem a implementação de alguns dos exemplos
-    acima.
-  - **Referências**: descreva as referências que você utilizou para a
-    implementação da linguagem. Faça uma breve descrição do papel de cada
-    referência ou como ela foi usada no projeto. Caso você tenha usado algum 
-    código existente como referência, descreva as suas contribuições originais
-    para o projeto.
-  - **Estrutura do código**: faça uma descrição da estrutura geral do código
-    discutindo os módulos, classes, estruturas de dados ou funções principais. 
-    Explicite onde as etapas tradicionais de compilação (análise léxica, 
-    sintática, semântica, etc) são realizadas, quando relevante.
-  - **Bugs/Limitações/problemas conhecidos**: discuta as limitações do seu
-    projeto e problemas conhecidos e coisas que poderiam ser feitas para
-    melhorá-lo no futuro. Note: considere apenas melhorias incrementais e não
-    melhorias grandes como: "reimplementar tudo em Rust".
-* **Código:** O codigo fonte deve estar presente no repositório principal junto com
-  a declaração das suas dependências. Cada linguagem possui um mecanismo
-  específico para isso, mas seria algo como o arquivo pyproject.toml em Python
-  ou package.json no caso de Javascript.
+PDDL é uma linguagem declarativa baseada em lógica de primeira ordem. A linguagem separa a descrição do domínio (regras gerais) do problema específico.
 
-## Critérios
+#### Exemplo de Domínio
+```pddl
+(define (domain logistics)
+    (:requirements :strips :typing)
+    (:types location package vehicle)
+    (:predicates 
+    (at ?obj - object ?loc - location)
+    (in ?pkg - package ?vehicle - vehicle))
+    (:action load
+    :parameters (?pkg - package ?truck - vehicle ?loc - location)
+    :precondition (and (at ?pkg ?loc) (at ?truck ?loc))
+    :effect (and (in ?pkg ?truck) (not (at ?pkg ?loc))))
+)
+```
 
-Cada trabalho começa com 100% e pode receber penalizações ou bônus de acordo com
-os critérios abaixo:
+#### Exemplo de Problema
+```pddl
+(define (problem delivery-task)
+    (:domain logistics)
+    (:objects truck1 - vehicle package1 - package depot warehouse - location)
+    (:init (at truck1 depot) (at package1 depot))
+    (:goal (at package1 warehouse))
+)
+```
 
-- Ausência do README: -50%
-- Instruções de instalação não funcionam: até -20%
-- Referências não atribuídas ou falta de referâncias: -10%
-- Código confuso ou mal organizado: até -15%
-- Falta de clareza em apresentar as técnicas e etapas de compilação: -15%
-- Bugs e limitações sérias na implementação: até -25%
-- Escopo reduzido, ou implementação insuficiente: até 25%
-- Uso de código não atribuído/plágio: até -100%
-- Repositório bem estruturado e organizado: até 10%
-- Linguagem com conceitos originais/interessantes: até +15%
-- Testes unitários: até +15%, dependendo da cobertura
+#### Semântica
+- Domínios definem tipos, predicados e ações disponíveis
+- Problemas especificam objetos, estado inicial e objetivos
+- Ações têm parâmetros, precondições e efeitos
+- Precondições definem quando uma ação pode ser executada
+- Efeitos especificam como uma ação modifica o estado do mundo
 
-Após aplicar todos os bônus, a nota é truncada no intervalo 0-100%. 
+## Instalação: 
+
+#### Pré-requisitos
+- GCC ou outro compilador C
+- Sistema Unix/Linux/macOS (testado no macOS)
+- Git para clonar o repositório
+
+#### Instalação Automatizada
+```bash
+# Clonar o repositório
+git clone https://github.com/fcte-compiladores/trabalho-final-trabscompila.git
+cd trabalho-final-trabscompila
+
+# Executar script de instalação
+./install.sh
+```
+
+## Uso:
+
+#### Exemplos
+./pddl_parser "Exemplos/Delivery/domain.pddl" "Exemplos/Delivery/problem.pddl"
+./pddl_parser "Exemplos/Tracking/domain.pddl" "Exemplos/Tracking/problem.pddl"
+
+#### Saídas
+- `Accepted`: Arquivos PDDL são válidos sintaticamente
+- `Rejected: Line X: [erro]`: Erro sintático com localização
+
+## Exemplos:
+O projeto contém uma pasta `Exemplos/` com arquivos PDDL organizados em graus variáveis de complexidade:
+
+#### 1. Hello-World
+- Características: Predicados básicos, uma ação, sem tipos
+
+#### 2. Sequence
+- Características: `:typing`, tipos hierárquicos, precondições múltiplas
+
+#### 3. Logistics
+- Características: Múltiplas ações interconectadas, efeitos condicionais, tipos especializados
+
+#### 4. Factory
+- Características: `:fluents`, `:adl`, funções numéricas, quantificadores existenciais
+
+#### 5. Delivery, Tracking, World of Tanks
+- Exemplos de domínios mais elaborados
+- Características: Combinam múltiplas extensões PDDL avançadas
+
+#### Teste todos os exemplos: `make test`
+
+## Referências: 
+- McDermott, Drew et al. (1998) - "PDDL - The Planning Domain Definition Language" - Especificação original da sintaxe PDDL
+- Enunciado do exercício Analisador Sintático: PDDL, desenvolvido pelo Prof. Bruno Ribas que inspirou a escolha desse tema para o trabalho: Preâmbulo
+O objetivo deste exercício é desenvolver um analisador sintático para um subconjunto
+da linguagem de descrição Planning Domain Definition Language (PDDL). Seu
+programa deve receber como argumento dois arquivos: um contendo
+uma descrição de domínio e outro contendo uma descrição de problema, ambos em
+PDDL. O programa deve analisar o conteúdo e responder se os códigos-fonte from
+aceitos ou não sitaticamente, caso não, deverá também apresentar a linha do
+arquivo na qual o primeiro erro foi encontrado.
+
+
+## Estrutura do código: 
+- Arquivo principal: `pddl_parser_novo.c` - implementação monolítica com todas as funcionalidades
+- Estruturas de dados: `enum TokenType` (tipos de tokens), `struct Token` (token atual), arrays para buffers de strings
+- Análise Lexical: função `advance_token()` - tokenização, tratamento de comentários, rastreamento de linha
+- Análise Sintática: funções `parse_domain()` e `parse_problem()` - parsing recursivo descendente seguindo gramática PDDL
+- Tratamento de erros: função `expect_token()` - validação de tokens esperados com localização precisa de erros
+- Validação semântica básica: verificação de balanceamento de parênteses e estruturas obrigatórias integrada ao parser
+- Sistema de build: `Makefile` com targets para compilação, teste e instalação
+
+
+
+## Bugs/Limitações/problemas conhecidos: 
+- Extensões PDDL: suporte parcial a `:fluents` e `:adl`, faltam `:derived-predicates` e validação matemática completa
+- Portabilidade: testado apenas em macOS/Unix, pode ter problemas em outros sistemas
+- Melhorias incrementais futuras: adicionar validação de escopo de variáveis, recuperação de erros, modo verbose para debugging, suporte completo a todas extensões PDDL

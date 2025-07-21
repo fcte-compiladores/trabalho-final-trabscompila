@@ -76,7 +76,8 @@ int is_keyword(const char *str) {
         "over", "start", "end", "all"
     };
     
-    for (int i = 0; i < sizeof(keywords)/sizeof(keywords[0]); i++) {
+    int num_keywords = sizeof(keywords)/sizeof(keywords[0]);
+    for (int i = 0; i < num_keywords; i++) {
         if (strcmp(str, keywords[i]) == 0) {
             return 1;
         }
