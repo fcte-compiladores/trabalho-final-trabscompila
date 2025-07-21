@@ -77,8 +77,8 @@ cd trabalho-final-trabscompila
 ## Uso:
 
 #### Exemplos
-./pddl_parser "Exemplos/Delivery/domain.pddl" "Exemplos/Delivery/problem.pddl"
-./pddl_parser "Exemplos/Tracking/domain.pddl" "Exemplos/Tracking/problem.pddl"
+- ./pddl_parser "Exemplos/Delivery/domain.pddl" "Exemplos/Delivery/problem.pddl"
+- ./pddl_parser "Exemplos/Tracking/domain.pddl" "Exemplos/Tracking/problem.pddl"
 
 #### Saídas
 - `Accepted`: Arquivos PDDL são válidos sintaticamente
