@@ -1,0 +1,13 @@
+(define (problem stacking-problem)
+  (:domain stacking)
+  (:init
+    (ontable a)
+    (ontable b)
+    (ontable c)
+    (clear a)
+    (clear b)
+    (clear c)
+    (handempty)
+  )
+  (:goal (and (on a b) (on b c)))
+)
