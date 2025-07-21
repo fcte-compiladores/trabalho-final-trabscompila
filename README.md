@@ -80,6 +80,9 @@ cd trabalho-final-trabscompila
 - ./pddl_parser "Exemplos/Delivery/domain.pddl" "Exemplos/Delivery/problem.pddl"
 - ./pddl_parser "Exemplos/Tracking/domain.pddl" "Exemplos/Tracking/problem.pddl"
 
+#### Rodar todos os exemplos
+- `make test`
+
 #### Saídas
 - `Accepted`: Arquivos PDDL são válidos sintaticamente
 - `Rejected: Line X: [erro]`: Erro sintático com localização
@@ -102,8 +105,6 @@ O projeto contém uma pasta `Exemplos/` com arquivos PDDL organizados em graus v
 #### 5. Delivery, Tracking, World of Tanks
 - Exemplos de domínios mais elaborados
 - Características: Combinam múltiplas extensões PDDL avançadas
-
-#### Teste todos os exemplos: `make test`
 
 ## Referências: 
 - McDermott, Drew et al. (1998) - "PDDL - The Planning Domain Definition Language" - Especificação original da sintaxe PDDL
