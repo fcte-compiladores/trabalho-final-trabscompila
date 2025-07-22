@@ -85,7 +85,7 @@ cd trabalho-final-trabscompila
 
 #### Saídas
 - `Accepted`: Arquivos PDDL são válidos sintaticamente
-- `Rejected: Line X: [erro]`: Erro sintático com localização
+- `Rejected: Line X: [erro]`: Erro sintático com número da linha onde o erro foi detectado, descrição do que era esperado versus o que foi encontrado e o token atual que causou o erro.
 
 ## Exemplos:
 O projeto contém uma pasta `Exemplos/` com arquivos PDDL organizados em graus variáveis de complexidade:
