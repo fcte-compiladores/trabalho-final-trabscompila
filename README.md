@@ -109,7 +109,7 @@ O projeto contém uma pasta `Exemplos/` com arquivos PDDL organizados em graus v
 ## Referências: 
 - McDermott, Drew et al. (1998) - "PDDL - The Planning Domain Definition Language" - Especificação original da sintaxe PDDL
 - [Gramática BNF do PDDL 3](https://artificial-intelligence.unibs.it/gerevini/papers/tmp/AIJ-3828final/appendix/appendix-bnfpddl30.pdf) 
-- Enunciado do exercício Analisador Sintático: PDDL, desenvolvido pelo Prof. Bruno Ribas que inspirou a escolha desse tema para o trabalho: Preâmbulo
+- Enunciado do exercício Analisador Sintático: PDDL, desenvolvido pelo Prof. Bruno Ribas que inspirou a escolha desse tema para o trabalho: Preâmbulo:
 O objetivo deste exercício é desenvolver um analisador sintático para um subconjunto
 da linguagem de descrição Planning Domain Definition Language (PDDL). Seu
 programa deve receber como argumento dois arquivos: um contendo
